@@ -69,7 +69,11 @@ pipeline {
                 }
             }
         }
-     }
-       
+     }  
+     stage('Docker Image Scan') {
+            steps {
+                sh 'trivy image --format table -o try-image-report.html ${DOCKER_IMAGE}'
+            }
+        } 
    }
 }

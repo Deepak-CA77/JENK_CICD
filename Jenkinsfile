@@ -53,12 +53,12 @@ pipeline {
         }
         stage('Maven Build') {
             steps {
-                sh 'mvn package'
+                sh 'mvn package -DskipTests'
             }
         }
         stage('Maven Deploy') {
             steps {
-                sh 'mvn deploy' 
+                sh 'mvn deploy -DskipTests' 
             }
         }
         stage('Build Docker Image and Tag') {
@@ -73,6 +73,14 @@ pipeline {
      stage('Docker Image Scan') {
             steps {
                 sh 'trivy image --format table -o try-image-report.html ${DOCKER_IMAGE}'
+            }
+        } 
+       stage('Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh 'docker push ${DOCKER_IMAGE}'
+                }
             }
         } 
    }

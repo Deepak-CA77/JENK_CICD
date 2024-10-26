@@ -31,13 +31,9 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonar') {
                 sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=BoardGame -Dsonar.projectKey=BoardGame \
-                                                       -Dsonar.java.binaries=. -Dsonar.exclusions=**/trivy-image-report.html'''
+                                                       -Dsonar.java.binaries=. -Dsonar.exclusions=**/trivy-fs-report.html'''
                 }
             }
         }
-        stage('Trivy Scan') {
-            steps {
-                sh 'trivy fs --format table --output trivy-fs-report.html .'
-            }
     }
 }

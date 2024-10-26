@@ -84,5 +84,12 @@ pipeline {
             }
         } 
        }
+    stage ('Deploy To Kubernetes') {
+    steps {
+        withKubeConfig(caCertificate: '',clusterName: 'my-cluster', contextName: '', credentialsId: 'k8-cred', namespace: "default", restrictKubeConfigAccess: false, serverUrl: 'https://66CE1D5C1299C70CE40C2F86E5E7CE07.gr7.us-east-1.eks.amazonaws.com'  ) {
+            sh 'kubectl apply -f deployment-services.yaml'
+        }
+    }
+    }
    }
 }

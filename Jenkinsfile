@@ -5,6 +5,7 @@ pipeline {
     }
     environment {
         SCANNER_HOME= tool 'sonar-scanner'
+        DOCKER_IMAGE= "bkrrajmali/boardshack:${env.BUILD_NUMBER}"
     }
     stages {
         stage('Git Checkout') {
@@ -64,10 +65,11 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                    sh 'docker build -t bkrrajmali/boardshack:latest .'
+                    sh 'docker build -t ${DOCKER_IMAGE} .'
                 }
             }
         }
      }
+       
    }
 }

@@ -1,19 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Git Checkout') {
             steps {
-                //
-            }
-        }
-        stage('Test') {
-            steps {
-                //
-            }
-        }
-        stage('Deploy') {
-            steps {
-                //
+                git branch: "prod", url: 'https://github.com/bkrrajmali/cicd-jenkins.git'
             }
         }
     }

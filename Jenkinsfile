@@ -44,12 +44,12 @@ pipeline {
         }
         stage('Maven Build') {
             steps {
-                sh 'mvn package'
+                sh 'mvn package -dbuildNumber=${BUILD_NUMBER}'
             }
         }
         stage('Maven Deploy') {
             steps {
-                sh 'mvn deploy'
+                sh 'mvn deploy -dbuildNumber=${BUILD_NUMBER} -DskipTests' 
             }
         }
     }
